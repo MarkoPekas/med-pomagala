@@ -5,9 +5,9 @@ import jwt from 'jsonwebtoken';
 import { checkAuth } from "@/auth";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  /*if (!checkAuth(req, res)) {
+  if (!checkAuth(req, res)) {
     return;
-  }*/
+  }
     const data = req.body
 
     if(data.superuser === true)

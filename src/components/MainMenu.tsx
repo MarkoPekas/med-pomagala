@@ -29,13 +29,13 @@ export default function MainMenu({currentPage}: {currentPage: string}): ReactEle
       </Link>
       <Link href="/users">
         <div className={`flex-1 flex justify-center items-center p-2 ${currentPage === "users" ? 'text-white' : 'text-gray-400'}`}>
-          <p className="px-2 hidden md:inline-block">Users</p>
+          <p className="px-2 hidden md:inline-block">Korisnici</p>
           <UsersIcon className={`w-6 h-6`} />
         </div>
       </Link>
       <Link href="/arhiva">
         <div className={`flex-1 flex justify-center items-center p-2 ${currentPage === "arhiva" ? 'text-white' : 'text-gray-400'}`}>
-          <p className="px-2 hidden md:inline-block">Archives</p>
+          <p className="px-2 hidden md:inline-block">Arhiva</p>
           <ArchiveIcon className={`w-6 h-6`} />
         </div>
       </Link>

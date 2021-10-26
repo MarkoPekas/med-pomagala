@@ -11,7 +11,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const data = await prisma.users.findMany({
         where: {
             deleted: false,
-            superuser: false
+            superuser: true
         }
     });
     res.status(200).json(data)

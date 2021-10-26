@@ -36,6 +36,10 @@ async function deleteUser(id: number): Promise<User[]> {
     return apiPost('/api/deleteuser', { id });
 }
 
+async function getAdmins(): Promise<User[]> {
+    return apiGet('/api/getadmins');
+}
+
 async function submit(user: User) {
     return apiPost('/api/edituser', user);
 }
@@ -47,15 +51,19 @@ export default function Users(props: any){
     const [id, setId] = useState<number>(0)
     const [osoba, setOsoba] = useState<AddUser>({name: "", lastname: "", address: "", phone: "", superuser: false, password: null, username: null});
     const [updateUsers, setUpdateUsers] = useState<boolean>(false);
+
+    const [isAdmin, setIsAdmin] = useState<boolean>(false);
     
 
     if(props.error){
         useEffect(() => {
-            //window.location.href = "/login";
+            window.location.href = "/login";
         }, []);
-        //return <div>Unauthorised</div>;
+        return <div>Unauthorised</div>;
     }
-
+    useEffect(() => {
+        setOsoba({...osoba, superuser: isAdmin});
+    }, [isAdmin]);
 
     function setOverlayData(overlayData: string, id: number){
         setId(id);
@@ -65,6 +73,7 @@ export default function Users(props: any){
     let date = new Date(Date.now()).toLocaleString().split(',')[0]
 
     const [users, setUsers] = React.useState<User[]>([]);
+    const [admins, setAdmins] = React.useState<User[]>([]);
     const [activeUser, setActiveUser] = React.useState<User>({
         id: 0, 
         name: "", 
@@ -75,6 +84,7 @@ export default function Users(props: any){
 
     useEffect(() => {
         getUsers().then(data => setUsers(data))
+        getAdmins().then(data => setAdmins(data))
     }, [updateUsers])
 
     useEffect(() => {
@@ -95,7 +105,15 @@ export default function Users(props: any){
         <div className="flex w-full min-h-screen flex-col pt-14">
             <MainMenu currentPage="users" />
             <div className="w-full pt-15 p-5 flex flex-col justify-center items-center">
-            <h1 className="text-3xl font-semibold">Korisnici</h1>
+            <div className="flex">
+                <div className={`px-5 py-2 ${isAdmin?'border text-gray-500 rounded':'border-t border-l rounded-t'}`} onClick={() => setIsAdmin(false)}>
+                    <h1 className={`text-3xl ${isAdmin?'font-normal':'font-semibold'}`}>Korisnici</h1>
+                </div>
+                <div className={`px-5 py-2 ${!isAdmin?'border text-gray-500 rounded':'border-t border-r rounded-t'}`} onClick={() => setIsAdmin(true)}>
+                    <h1 className={`text-3xl ${!isAdmin?'font-normal':'font-semibold'}`}>Administratori</h1>
+                </div>
+            </div>
+            
         </div>
         <div className="max-w-xl mx-auto w-full">
             <div className="px-5 pb-3 max-w-md mx-auto">
@@ -110,14 +128,14 @@ export default function Users(props: any){
                     <div className="pt-2 md:pl-2 flex-1">
                         <div className="flex justify-between border rounded items-center w-full h-full p-2" onClick={() => setOverlay("dodaj")}>
                             <PlusIcon className="h-5 w-5 text-blue-500" />
-                            <p>Dodaj Korisnika</p>
+                            <p>{isAdmin?'Administrator':'Dodaj Korisnika'}</p>
                         </div>
                     </div>
                 </div>
                 
             </div>
             <div className="overflow-y-auto h-full">
-                {/*users.map((person, id) => (
+                {(isAdmin?users:admins).map((person, id) => (
                 <div key={id} className={(person.name.includes(search))?"":"hidden"}>
                     <div className="border-t p-3 flex">
                         <div className="w-full flex flex-col items-center ml-4">
@@ -135,7 +153,7 @@ export default function Users(props: any){
                         </div>
                     </div>
                 </div>
-                ))*/}
+                ))}
                 <div className="h-big"></div>
             </div>
         </div>
@@ -249,11 +267,8 @@ export default function Users(props: any){
                             onChange={(e) => setOsoba({ ...osoba, ["phone"]: e.target.value })}
                             className="p-2 pl-3 min-w-0 border rounded focus:outline-none"/>
                   </div>
-                  <div className="flex items-center">
-                    <input type="checkbox" className="m-2" onChange={() => setOsoba({...osoba, ["superuser"]: !osoba.superuser})} />
-                    <label className="text-sm text-gray-500 -mt-1">superuser</label>
-                  </div>
-                  <div className={"transition-all overflow-hidden "+(osoba.superuser?"h-32":"h-0")}>
+
+                  <div className={"transition-all overflow-hidden "+(isAdmin?"h-32":"h-0")}>
                     <div className="flex-1 flex flex-col">
                         <p className="relative bg-white mt-2 text-xs ml-5 -mb-2 text-gray-500 z-10 max-w-min whitespace-nowrap px-2">username</p>
                         <input  type="text" 
