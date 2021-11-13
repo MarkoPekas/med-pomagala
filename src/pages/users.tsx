@@ -12,7 +12,8 @@ interface User {
     name: string, 
     lastname: string, 
     address: string, 
-    phone: string
+    phone: string,
+    username: string
 }
 interface AddUser {
     name: string, 
@@ -79,7 +80,8 @@ export default function Users(props: any){
         name: "", 
         lastname: "", 
         address: "", 
-        phone: ""
+        phone: "",
+        username: ""
     })
 
     useEffect(() => {
@@ -95,7 +97,8 @@ export default function Users(props: any){
             name: "", 
             lastname: "", 
             address: "", 
-            phone: ""
+            phone: "",
+            username: ""
         })
     }, [id])
 
@@ -106,11 +109,11 @@ export default function Users(props: any){
             <MainMenu currentPage="users" />
             <div className="w-full pt-15 p-5 flex flex-col justify-center items-center">
             <div className="flex">
-                <div className={`px-5 py-2 ${isAdmin?'border text-gray-500 rounded':'border-t border-l rounded-t'}`} onClick={() => setIsAdmin(false)}>
-                    <h1 className={`text-3xl ${isAdmin?'font-normal':'font-semibold'}`}>Korisnici</h1>
+                <div className={`px-5 py-2 ${isAdmin?'border text-gray-500 rounded cursor-pointer hover:bg-gray-50 transition-colors':'border-t border-l rounded-t'}`} onClick={() => setIsAdmin(false)}>
+                    <h1 className={`text-3xl ${isAdmin?'font-normal':'font-semibold'}`}>Kontakti</h1>
                 </div>
-                <div className={`px-5 py-2 ${!isAdmin?'border text-gray-500 rounded':'border-t border-r rounded-t'}`} onClick={() => setIsAdmin(true)}>
-                    <h1 className={`text-3xl ${!isAdmin?'font-normal':'font-semibold'}`}>Administratori</h1>
+                <div className={`px-5 py-2 ${!isAdmin?'border text-gray-500 rounded cursor-pointer hover:bg-gray-50 transition-colors':'border-t border-r rounded-t'}`} onClick={() => setIsAdmin(true)}>
+                    <h1 className={`text-3xl ${!isAdmin?'font-normal':'font-semibold'}`}>Zaposlenici</h1>
                 </div>
             </div>
             
@@ -126,21 +129,24 @@ export default function Users(props: any){
                         </div>
                     </div>
                     <div className="pt-2 md:pl-2 flex-1">
-                        <div className="flex justify-between border rounded items-center w-full h-full p-2" onClick={() => setOverlay("dodaj")}>
+                        <div className="flex cursor-pointer hover:bg-gray-50 transition-colors justify-between border rounded items-center w-full h-full p-2" onClick={() => setOverlay("dodaj")}>
                             <PlusIcon className="h-5 w-5 text-blue-500" />
-                            <p>{isAdmin?'Administrator':'Dodaj Korisnika'}</p>
+                            <p>{isAdmin?'Zaposlenik':'Dodaj Korisnika'}</p>
                         </div>
                     </div>
                 </div>
                 
             </div>
             <div className="overflow-y-auto h-full">
-                {(isAdmin?users:admins).map((person, id) => (
+                {(isAdmin?admins:users).map((person, id) => (
                 <div key={id} className={(person.name.includes(search))?"":"hidden"}>
                     <div className="border-t p-3 flex">
                         <div className="w-full flex flex-col items-center ml-4">
                             <div className="flex items-center w-full">
+                                <div>
                                 <p className="text-lg font-semibold">{person.name} {person.lastname}</p>
+                                {isAdmin?<p className="text-sm text-gray-600">{person.username}</p>:null}
+                                </div>
                                 <div className="flex-1"></div>
                                 
                             </div>
@@ -194,7 +200,7 @@ export default function Users(props: any){
                         onChange={event => setActiveUser({...activeUser, address: event.target.value})}></input>
                     </div>
                 </div>
-                <div className="shadow rounded p-3 flex items-center mt-3" onClick={() => {submit(activeUser); setOverlay("razduzi")}}>
+                <div className="shadow rounded p-3 flex items-center mt-3 cursor-pointer hover:bg-gray-100 transition-colors" onClick={() => {submit(activeUser); setOverlay("razduzi")}}>
                     <PencilIcon className="h-5 w-5 text-green-500 mr-2" />
                     <p>Spremi Promjene</p>
                 </div>
@@ -217,7 +223,7 @@ export default function Users(props: any){
                         
                     </div>
                     <p className="text-sm text-gray-500">Da li sigurno želite izbrisat osobu {activeUser.name} iz baze?</p>
-                    <div className="shadow rounded p-3 flex items-center mt-3"
+                    <div className="shadow rounded p-3 flex items-center mt-3 cursor-pointer hover:bg-gray-100 transition-colors"
                     onClick={() => {deleteUser(activeUser.id); setOverlay("razduzi"); setUpdateUsers(!updateUsers)}}>
                 
                         <TrashIcon className="h-5 w-5 text-red-500 mr-2" />
@@ -285,7 +291,7 @@ export default function Users(props: any){
                   
                 </div>
                 <div 
-                  className="shadow rounded p-3 flex items-center mt-3" 
+                  className="shadow rounded p-3 flex items-center mt-3 cursor-pointer hover:bg-gray-100 transition-colors" 
                   onClick={() => {
                     addUser(osoba); 
                     setOverlay("razduzi");

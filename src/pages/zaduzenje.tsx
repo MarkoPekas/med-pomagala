@@ -220,7 +220,7 @@ function Zaduzenje(props: any) {
     </div>
     
     </div>
-    <button className="rounded max-w-xl z-0 mx-auto mt-3 shadow w-full p-3 text-white bg-blue-900 font-semibold text-lg active:bg-blue-900 active:text-white"
+    <button className="rounded max-w-xl z-0 mx-auto mt-3 hover:bg-blue-800 transition-colors shadow w-full p-3 text-white bg-blue-900 font-semibold text-lg active:bg-blue-900 active:text-white"
             onClick={submitZaduzenje}>
     unesi</button>
     </div>
@@ -263,7 +263,7 @@ function Zaduzenje(props: any) {
                   </div>
                 </div>
                 <div 
-                  className="shadow rounded p-3 flex items-center mt-3" 
+                  className="shadow rounded p-3 flex items-center mt-3 cursor-pointer hover:bg-gray-100 transition-colors" 
                   onClick={() => {
                     addUser(osoba); 
                     setOverlay("razduzi");

@@ -170,7 +170,7 @@ function Razduzenje(){
                     <p className="text-sm text-gray-500">{activeOrder.takenByPhone}</p>
                     <p className="text-sm text-gray-500">{activeOrder.takenByAddress}</p>
                 </div>
-                <div className="shadow rounded p-3 flex items-center mt-3" onClick={() => {setOverlay("razduzi")}}>
+                <div className="shadow rounded p-3 flex items-center mt-3 cursor-pointer hover:bg-gray-100 transition-colors" onClick={() => {setOverlay("razduzi")}}>
                     <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
                     <p>Razduži</p>
                 </div>
@@ -210,7 +210,7 @@ function Razduzenje(){
                 placeholder="dd/mm/yyyy"
                 onChange={(e) => setDate(e.target.value)}></input>
                 </div>
-                <div className="shadow rounded p-3 flex items-center mt-3" onClick={confirm}>
+                <div className="shadow rounded p-3 flex items-center mt-3 cursor-pointer hover:bg-gray-100 transition-colors" onClick={confirm}>
                     <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
                     <p>Potvrdi</p>
                 </div>

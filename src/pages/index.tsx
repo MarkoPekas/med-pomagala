@@ -181,7 +181,7 @@ export default function Inventar(){
                         className="p-2 pl-3 w-full border rounded focus:outline-none"
                         onChange={(e) => setUredaj({ ...uredaj, ["inventoryCode"]: e.target.value })} />
                 <div 
-                    className=" flex rounded shadow w-full p-5 my-3 items-center" 
+                    className=" flex rounded shadow w-full p-5 my-3 items-center cursor-pointer hover:bg-gray-50 transition-colors" 
                     onClick={() => {
                         if(uredaj.inventoryCode === "")setError("Kod artikla je obavezan!");
                         else if(uredaj.itemName === "")setError("Naziv artikla je obavezan!");

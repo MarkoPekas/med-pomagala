@@ -35,7 +35,7 @@ export default function InventoryDropdown({index, item, settodelete}: Props){
                 <p className="flex-1">{item.items.length - calcAvailable(item.items)}</p>
                 <p className="flex-1">{calcAvailable(item.items)}</p>
                 <p className="font-semibold flex-1">{item.items.length}</p>
-                {open===item.name?<ChevronUpIcon className="h-6 w-6 text-gray-500" onClick={() => setOpen("none")} />:<ChevronDownIcon className="h-6 w-6 text-gray-500" onClick={() => setOpen(item.name)} />}
+                {open===item.name?<ChevronUpIcon className="h-6 w-6 text-gray-500 cursor-pointer" onClick={() => setOpen("none")} />:<ChevronDownIcon className="h-6 w-6 text-gray-500 cursor-pointer" onClick={() => setOpen(item.name)} />}
             </div>
             <div key={index} className={"overflow-hidden transition-all duration-700 relative "} style={{height: `${(open===item.name?item.items.length*41:0)}px`}}>
             {item.items.map((items, index) => (
@@ -44,7 +44,7 @@ export default function InventoryDropdown({index, item, settodelete}: Props){
                         <p className="text-gray-500">{items.code}</p>
                     </div>
                     <p className={"px-5 " + (items.available?"text-green-500":"text-red-500")}>{items.available?"dostupno":"zaduženo"}</p>
-                    <MinusIcon className="h-6 w-6 text-red-500" onClick={() => settodelete(items.code)} />
+                    <MinusIcon className="h-6 w-6 text-red-500 cursor-pointer" onClick={() => settodelete(items.code)} />
                 </div>
             ))}
             </div>

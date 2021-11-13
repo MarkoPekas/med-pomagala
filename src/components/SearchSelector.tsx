@@ -29,7 +29,7 @@ export const SearchSelector = ({overlay, options, onChange, selected, tag}: Prop
         <div className="w-full max-h-36 md:max-h-52 border rounded mt-2 px-3 overflow-auto">
         {options.map((person, id) => (
             <div key={id} className={((person.name + " " + person.lastname).includes(search))?"":"hidden"}>
-            <div onClick={() => onChange(person.id)} className={(person.id==selected)?"p-3 w-full flex justify-center shadow rounded items-center h-24 my-2 transition-all duration-300 bg-blue-100":"duration-300 transition-all px-3 w-full flex shadow rounded items-center justify-center h-12 my-2"}>
+            <div onClick={() => onChange(person.id)} className={(person.id==selected)?"p-3 cursor-pointer hover:bg-blue-200 w-full flex justify-center shadow rounded items-center h-24 my-2 transition-all duration-300 bg-blue-100":"cursor-pointer hover:bg-gray-50 duration-300 transition-all px-3 w-full flex shadow rounded items-center justify-center h-12 my-2"}>
                 <div className="w-full flex flex-col overflow-hidden">
                 <div className="flex w-full">
                     <p className={(person.id==selected)?"text-blue-900":""}>{person.name} {person.lastname}</p>
@@ -46,7 +46,7 @@ export const SearchSelector = ({overlay, options, onChange, selected, tag}: Prop
             </div>
         ))
         }
-        <div className="transition px-3 w-full flex shadow rounded items-center h-12 my-2" onClick={() => overlay("dodaj")}>
+        <div className="transition cursor-pointer hover:bg-gray-100 px-3 w-full flex shadow rounded items-center h-12 my-2" onClick={() => overlay("dodaj")}>
             <p>Dodaj Osobu</p>
             <div className="flex-1"></div>
             <PlusIcon className="h-5 w-5 text-green-500" />
